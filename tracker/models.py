@@ -1,5 +1,5 @@
+from django.conf import settings
 from django.db import models
-
 # Create your models here.
 class Track(models.Model):
     name = models.CharField(max_length=120)
@@ -15,4 +15,8 @@ class Choice(models.Model):
 class Log(models.Model):
     response = models.ForeignKey(Choice, on_delete=models.CASCADE)
     date = models.DateField('date')
-    
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
