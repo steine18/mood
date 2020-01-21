@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Log
 from .forms import LogForm
 from django.utils import timezone
+from django.contrib.auth import logout
+from django.contrib import messages
 
 # Create your views here.
-def log_view(request):
+def home(request):
     if request.method == "POST":
         form = LogForm(request.POST)
         if form.is_valid():
@@ -23,3 +25,8 @@ def log_view(request):
         context={'log':[],
                   'form':''}
     return render(request, 'tracker/log_view.html', context)
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "Logged out successfully!") #Find a spot for logout message
+    return redirect("tracker:home")
